@@ -1,8 +1,5 @@
--- ============================================================
--- Q1: Is revenue growing, flat, or declining over time?
--- ============================================================
 
--- Quick look at revenue by month
+-- Q1: Is revenue growing, flat, or declining over time?
 SELECT DATE_FORMAT(InvoiceDate, '%Y-%m') AS Date, ROUND(SUM(Quantity * Price), 2) AS Monthly_Revenue
 FROM retail
 GROUP BY DATE_FORMAT(InvoiceDate, '%Y-%m')
@@ -20,9 +17,8 @@ WHERE InvoiceDate < '2011-12-01'
 GROUP BY DATE_FORMAT(InvoiceDate, '%Y-%m')
 ORDER BY Date ASC;
 
--- ============================================================
+
 -- Q2: Top 10 best-selling products by quantity vs. by revenue
--- ============================================================
 
 -- remember to use description as well instead of only using quantity, so its more clear when viewing
 
@@ -44,11 +40,7 @@ GROUP BY Description
 ORDER BY Total_Revenue DESC
 LIMIT 10;
 
--- ============================================================
 -- Q3: Can wholesale vs. individual buyers be distinguished by order size?
--- (Exploratory - no table saved, used to investigate the distribution.
--- Found only one extreme outlier customer, no clear wholesale "tier")
--- ============================================================
 
 -- Average quantity purchased per order line, per customer
 SELECT
@@ -66,9 +58,11 @@ FROM retail
 GROUP BY CustomerID
 ORDER BY total_quantity_purchased DESC;
 
--- ============================================================
+
+-- answer was no, couldnt be distinguished bc of outliers
+
+
 -- Q4: What % of revenue comes from UK vs. international customers?
--- ============================================================
 CREATE TABLE uk_vs_international_revenue AS
 SELECT
     CASE WHEN Country = 'United Kingdom' THEN 'UK' ELSE 'International' END AS region,
@@ -76,10 +70,8 @@ SELECT
 FROM retail
 GROUP BY region;
 
--- ============================================================
 -- Q5: What does monthly active customer activity look like over time?
--- (Final partial month excluded, same as Q1)
--- ============================================================
+
 CREATE TABLE monthly_active_customers AS
 SELECT
     DATE_FORMAT(InvoiceDate, '%Y-%m') AS month,
