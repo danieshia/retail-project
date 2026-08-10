@@ -1,5 +1,5 @@
--- Remove transactions with no CustomerID (can't attribute to a specific customer)
+-- Remove transactions with no CustomerID 
 DELETE FROM retail WHERE CustomerID IS NULL;
 
--- Remove cancelled orders (Invoice numbers starting with 'C')
+-- Remove cancelled orders 
 DELETE FROM retail WHERE Invoice LIKE 'C%';
